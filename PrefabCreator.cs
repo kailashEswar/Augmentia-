@@ -12,22 +12,22 @@ public class PrefabCreator : MonoBehaviour
     private GameObject dragon;
     private ARTrackedImageManager aRTrackedImageManager;
 
-
     private void OnEnable()
     {
+        // Finds the ARTrackedImageManager component to track images in the AR environment.
         aRTrackedImageManager = gameObject.GetComponent<ARTrackedImageManager>();
 
+        // Registers the OnImageChanged event handler to respond to changes in tracked images.
         aRTrackedImageManager.trackedImagesChanged += OnImageChanged;
-
     }
 
     private void OnImageChanged(ARTrackedImagesChangedEventArgs obj)
     {
+        // For each newly detected AR image, instantiate a dragon prefab and adjust its position.
         foreach (ARTrackedImage image in obj.added)
         {
             dragon = Instantiate(dragonprefab, image.transform);
             dragon.transform.position += prefabOffset;
         }
-
     }
 }
